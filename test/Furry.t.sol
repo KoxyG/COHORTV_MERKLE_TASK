@@ -6,7 +6,7 @@ import "../src/Furry.sol";
 
 contract CounterTest is Test {
     FurryFoxFriends furry;
-    bytes32 merkleRoot = 0xba54e156a464fb850ee8a0990b49cb21790e83029283c979d83e247c9760c149; 
+    bytes32 merkleRoot = 0xc947ddeae47a6fd5b11ad273122c92bcc4f04d6eb11d56105836588302c9c69a; 
     // This is the Merkle root generated from the script/MakeMerkle.sol script
     // It corresponds to the following addresses and their respective proof in the output.json file
     // and can be used to mint in the presale:
